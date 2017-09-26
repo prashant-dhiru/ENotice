@@ -1,48 +1,39 @@
-// BASE SETUP
-// =============================================================================
+require('./config/config');
 
-// call the packages we need
-var express    = require('express');        // call express
-var app        = express();                 // define our app using express
-var bodyParser = require('body-parser');
+const cors = require('cors');
+const path = require('path');
+const express = require('express');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
-//call  the packages for mongodb
-var dbFunction = require('./dbFunction');
+const router = express.Router();
+const port = process.env.PORT || 3000;
 
-// configure app to use bodyParser()
-// this will let us get the data from a POST
-app.use(bodyParser.urlencoded({ extended: true }));
+const {mongoose} = require('./db/mongoose');
+
+const app = express();
+
+app.use(cors({origin: 'http://localhost:4200'}));
 app.use(bodyParser.json());
+//app.use(express.static(__dirname + '/Client/dist'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use( session ({
+	secret : process.env.SESSION_KEY,
+	resave: true,
+	saveUninitialized: false,
+	store: new MongoStore({ mongooseConnection: mongoose.connection })
+}));
 
-var port = process.env.PORT || 8080;        // set our port
+//app.use(require('./routes/userRoutes'));
+//app.use(require('./routes/adminRoutes'));
 
-// ROUTES FOR OUR API
-// =============================================================================
-var router = express.Router();              // get an instance of the express Router
-
-// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
-router.get('/', function(req, res) {
-	res.json({ message: 'welcome to taskket api service' });   
+app.get('/', (request, response) => {
+    response.send('Hello World!');
 });
 
-// more routes for our API
-router.route('/signup')
-	.post(function(req, res) {
-		dbFuction.registerUser(req.body,res);    
-	});
+app.listen(port, (err) => {
+  console.log(`Server is up on port ${port}`);
+})
 
-router.route('/login')
-	.post((req,res)=> {
-		dbFuction.loginUser(req.body,res);
-	});
-
-
-// REGISTER OUR ROUTES -------------------------------
-// all of our routes will be prefixed with /api
-
-app.use('/api', router);   //middle-ware for api routes
-
-// START THE SERVER
-// =============================================================================
-app.listen(port);
-console.log('Magic happens on port ' + port);
+module.exports = {app};

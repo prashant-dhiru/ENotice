@@ -8,7 +8,7 @@ mongoose.connect(process.env.MONGODB_URI,{
 }).then(()=> {
 	console.log('Successfully connected to database: ' + process.env.db);
 },(error)=>{
-	console.log('Unable to connect to database : ' + error.message);
+	console.log("database says : " + error.message);
 });
 
 module.exports = {mongoose};

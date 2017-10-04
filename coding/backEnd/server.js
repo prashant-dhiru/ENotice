@@ -25,7 +25,7 @@ app.use( session ({
 	store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
-//app.use(require('./routes/userRoutes'));
+app.use(require('./routes/userRoutes'));
 //app.use(require('./routes/adminRoutes'));
 
 app.get('/', (request, response) => {

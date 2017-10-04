@@ -1,8 +1,7 @@
+const uniqueValidator = require('mongoose-unique-validator');
 const mongoose = require('mongoose');
 const validator = require('validator');
-const bcrypt = require('bcryptjs');
 const _ = require('lodash');
-const jwt = require('jsonwebtoken');
 
 mongoose.Promise = global.Promise;
 
@@ -13,31 +12,32 @@ var userSchema = new mongoose.Schema({
 		minlength : [3,"name is too short, name must be 3 or more characters long"],
 		maxlength : [50,"name is too long, use less then 50 characters"]
 	},
-	login : {
-		username : {
-			type : String,
-			required : [true, "user's E-mail is required"],
-			unique : true,
-			index : true
-		},
-		password : {
-			type : String,
-			required : [true, "password is reqired"],
-			minlength : [6,"password too short, must be 6 or more characters long"],
-			maxlength : [50,"password too long, must be less then 50 characters"]
-		}
+	password : {
+		type : String,
+		required : [true, "password is reqired"],
+		minlength : [6,"password too short, must be 6 or more characters long"],
+	//maxlength : [50,"password too long, must be less then 50 characters"]
 	},
-	contact : {
-		email : [{
-			type : String,
-			required : [true,"user's E-mail is reqired"],
-			unqiue : true
-		}],
-		phone : [{
-			type : String,
-			default : null
-			
-		}]
+	email : {
+		type : String,
+		required : [true,"user's E-mail is reqired"],
+		unique : true,
+		validate: {
+      validator: value => validator.isEmail(value),
+      message: '{VALUE} is not a valid E-mail address'
+    }
+	},
+	phone : [{
+		type : String,		
+		default : null,
+		validate: {
+      validator: value => validator.isMobilePhone(value, 'en-IN'),
+      message: '{VALUE} is not a valid phone number.'
+    }	
+	}],
+	isAdmin:{																							
+		type : Boolean,																				  
+		default : false
 	},
 	registerationDate : {
 		type : Date,
@@ -45,5 +45,8 @@ var userSchema = new mongoose.Schema({
 	}
 },{collection: 'users'});
 
-userDataSchema.plugin(uniqueValidator, {message: '{VALUE} already in use.'});
-var userData = mongoose.model('userData',userDataSchema);
+
+userSchema.plugin(uniqueValidator, {message: '{VALUE} already in use.'});
+var User = mongoose.model('userData',userSchema);
+
+module.exports = {User};

@@ -26,7 +26,7 @@ app.use( session ({
 }));
 
 app.use(require('./routes/userRoutes'));
-//app.use(require('./routes/adminRoutes'));
+app.use(require('./routes/boardRoutes'));
 
 app.get('/', (request, response) => {
     response.send('Hello World!');

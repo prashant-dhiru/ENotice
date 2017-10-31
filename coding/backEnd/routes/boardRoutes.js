@@ -2,13 +2,14 @@ const {Board} = require('../models/board');
 var express = require('express');
 var router = express.Router();
 const _ = require('lodash');
+const mongoose = require('mongoose');
 
 const {passLoggedUser} = require("../middleware/authenticationFunction");
 const {checkAdminStatus}= require('../middleware/authenticationFunction');
 
 router.put('/board',passLoggedUser,checkAdminStatus,(req,res)=>{
 	body = req.body;
-	console.log(body);
+	//console.log(body);
 
 	var board = new Board({
 		boardName: body.boardName,
@@ -29,10 +30,34 @@ router.put('/board',passLoggedUser,checkAdminStatus,(req,res)=>{
 });
 
 
+router.get('/board/:boardName',(req,res)=>{
+	var board = Board;
+	var condition = null;
+	
+	if(req.session.isLogged != true)
+		condition = {isPrivate: false}; //send all public boards
+	else if(req.session.isLogged == true && req.session.isAdmin != true)
+		condition = {$or : [{isPrivate:false},{memberList : mongoose.Types.ObjectId(req.session._id)}]}
+	else if(req.session.isAdmin == true)
+		condition = {}
+
+
+	board.findOne({boardName : req.params.boardName}).
+	where(condition).
+	then((result,err)=>{
+		if(err)
+			res.send("internal database error = "+ err);
+		else if(result == null)
+			res.send( req.params.boardName + " board was not found");
+		else
+			res.send(result);
+	})
+});
+
 router.patch('/board/:boardName',passLoggedUser,checkAdminStatus,(req,res)=>{
 	body = req.body;
 	body = _.pick(body,["boardName","isPrivate"]);
-	console.log(body);
+	//console.log(body);
 
 	var board = Board;
 	board.findOne({boardName: req.params.boardName},(err,doc)=>{
@@ -69,4 +94,24 @@ router.delete('/board/:boardName',passLoggedUser,checkAdminStatus,(req,res)=>{
 	})
 });
 
-module.exports = router;
+
+router.get('/boards',(req,res)=>{
+	var board = Board;
+	var query = null;
+	//console.log(req.session._id);
+	if(req.session.isLogged != true)
+		query = {isPrivate : false}; //send all public boards
+	else if(req.session.isLogged == true && req.session.isAdmin != true)
+		query = {$or : [{isPrivate : false},{memberList : mongoose.Types.ObjectId(req.session._id) }]}
+	else if(req.session.isAdmin == true)
+		query = {}
+	
+	board.find(query,(err,result)=>{
+		if(err)
+			res.send("internal database error");
+		else
+			res.send(result);
+	})
+});
+
+module.exports = router;	

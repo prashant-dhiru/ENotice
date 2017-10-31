@@ -1,6 +1,7 @@
 //to do update user info and reset password
 //send activation link to email
-
+//user update database
+//delete me and deleteuser routes
 
 
 const {User} = require('../models/user');
@@ -45,9 +46,10 @@ router.post("/user/login",passNonLoggedUser,(req,res)=>{
 	
 	user.findOne({ email:body.email})
 			.exec(function (err,userData){
-				if(bcrypt.compareSync(body.password, userData.password)){
+				if( userData == null )
+					res.send({ message: "Username was not found" });
+				else if(bcrypt.compareSync(body.password, userData.password))
 					authenticateUser(req,res,userData);
-				}
 				else
 					res.send({ message: "password does not match" });
 			});
@@ -60,7 +62,7 @@ router.post("/user/logout",passLoggedUser,(req,res)=>{
 });
 
 
-router.get("/user/:id",(req,res)=> {
+router.get("/user/:id",passLoggedUser,(req,res)=> {
 	var user = User;
 
 	user.findById(req.params.id)
@@ -74,6 +76,14 @@ router.get("/user/:id",(req,res)=> {
 			});
 });
 
+router.get("/me",passLoggedUser,(req,res)=> {
+	var user = User;
+	user.findById(req.session._id)
+			.select('_id name email isAdmin')
+			.exec(function (err,userData) {
+					res.send(userData);
+			});
+});
 
 router.get("/users",(req,res)=> {
 	var user = User;
@@ -117,7 +127,8 @@ router.get("/nonAdmins",(req,res)=> {
 			});
 });
 
-router.post("/turnAdmin/:id",passLoggedUser,checkAdminStatus,(req,res)=>{
+
+router.post("/user/turnAdmin/:id",passLoggedUser,checkAdminStatus,(req,res)=>{
 	var user=User;
 	user.findById(req.params.id,(err, userData)=>{
 		if (userData == null)
@@ -129,7 +140,27 @@ router.post("/turnAdmin/:id",passLoggedUser,checkAdminStatus,(req,res)=>{
 	});
 });
 
-//user update database
+router.delete("/user/me",passLoggedUser,(req,res)=>{
+	var user=User;
+	user.findByIdAndRemove(req.session._id,(err,result)=>{
+		if(result != null){
+			res.send('your account is deleted');
+		}else{
+			res.send('your account was not found!!');
+		}
+		req.session.destroy();
+	})
+});
 
+router.delete("/user/:id",passLoggedUser,checkAdminStatus,(req,res)=>{
+	var user=User;
+	user.findByIdAndRemove(req.params.id,(err,result)=>{
+		if(result != null){
+			res.send('user ' + req.params.id + ' is deleted');
+		}else{
+			res.send('your account was not found!!');
+		}
+	})
+});
 
 module.exports = router;

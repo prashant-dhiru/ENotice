@@ -1,9 +1,9 @@
 const {Student} = require('../models/user');
 
 var checkAdminStatus = (req,res,next)=>{
-	if (req.session.isAdmin == false)
-		res.status(400).send({message : `This action require admin privaillage,
-		your account does not have admin privaillage`});
+	if (req.session.isAdmin == false){
+		res.status(400).send({message : `This action require admin privaillage,your account does not have admin privaillage`});
+	}
 	else 
 		next();
 }
@@ -17,7 +17,7 @@ var authenticateUser = (req,res,userData) => {
 };
 
 var passLoggedUser = (request, response, next) => {
-	if ( request.session.isLogged == null || request.session.isLogged == false)
+	if ( request.session.isLogged == false || request.session.isLogged == null )
 		response.status(400).send({message:"you are not Logged-In"});
 	else
 		next();

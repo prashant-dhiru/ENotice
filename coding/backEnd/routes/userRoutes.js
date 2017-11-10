@@ -11,6 +11,7 @@ var router = express.Router();
 const _ = require('lodash');
 
 const {validateUserInfo} = require('../middleware/userRouteHelperFucntion');
+const {validateUpdateInfo} = require('../middleware/userRouteHelperFucntion');
 const {hashingPassword} = require('../middleware/userRouteHelperFucntion');
 const {passNonLoggedUser} = require("../middleware/authenticationFunction");
 const {authenticateUser} = require("../middleware/authenticationFunction");
@@ -35,6 +36,30 @@ router.put('/user',validateUserInfo,hashingPassword, (req,res)=>{
 				res.json({message : "internl database error"});
 			else 
 				res.json({message: "registration sucessfull, login to continue."});
+		});
+});
+
+
+router.patch('/user',passLoggedUser,validateUpdateInfo, (req,res)=>{
+		body = req.body;
+
+		var user = new User({
+			name : body.name,
+			email : body.email,
+			phone : body.phone
+		});
+
+
+		User.findByIdAndUpdate(req.session._id,{name: user.name, email: user.email, phone: user.phone},(err,result)=>{
+			if (err && err.name == 'ValidationError')
+				for( feilds in err.errors){
+					res.send({message : err.errors[feilds].message});
+					break;
+				}
+			else if (err)
+				res.send({message : "internl database error"});
+			else 
+				res.send({message: "user's data updated"});	
 		});
 });
 
@@ -134,12 +159,25 @@ router.post("/user/turnAdmin/:id",passLoggedUser,checkAdminStatus,(req,res)=>{
 		if (userData == null)
 			res.status(400).send({message:"User not found!!"});
 		else{
+			userData.isAdmin = true;
 			userData.save();
 			res.send({message: "user changed to admin"});
 		} 
 	});
 });
 
+router.post("/user/turnNonAdmin/:id",passLoggedUser,checkAdminStatus,(req,res)=>{
+	var user=User;
+	user.findById(req.params.id,(err, userData)=>{
+		if (userData == null)
+			res.status(400).send({message:"User not found!!"});
+		else{
+			userData.isAdmin = false;
+			userData.save();
+			res.send({message: "users's admin privileges revoked"});
+		} 
+	});
+});
 router.delete("/user/me",passLoggedUser,(req,res)=>{
 	var user=User;
 	user.findByIdAndRemove(req.session._id,(err,result)=>{

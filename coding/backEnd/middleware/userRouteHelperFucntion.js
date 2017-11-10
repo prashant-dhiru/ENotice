@@ -17,6 +17,18 @@ var validateUserInfo = (request,response,next)=>{
 };
 
 
+var validateUpdateInfo = (request,response,next)=>{
+	body = request.body;
+	
+	if(body.email == '' || body.name == '')
+		return response.status(400).send({message : "Please enter all the required fields"});
+	else if(body.email == null || body.name == null)
+		return response.status(400).send({message : "Please enter all the required fields"});
+	else
+		return next();
+};
+
+
 var hashingPassword = (req, res, next)=>{
 	bcrypt.genSalt(10, (error, salt) => {
   	bcrypt.hash(req.body.password, salt, (error, hash) => {
@@ -26,4 +38,4 @@ var hashingPassword = (req, res, next)=>{
   });
 };
 
-module.exports = {hashingPassword,validateUserInfo};
+module.exports = {hashingPassword,validateUserInfo,validateUpdateInfo};

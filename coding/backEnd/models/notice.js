@@ -42,4 +42,9 @@ var noticeSchema = new mongoose.Schema({
 			require : true
 		}
 	}]
-})
+},{collection: 'notice'});
+
+noticeSchema.plugin(uniqueValidator, {message: '{VALUE} already in use.'});
+var Notice = mongoose.model('noticeSchema',noticeSchema);
+
+module.exports = {Notice};

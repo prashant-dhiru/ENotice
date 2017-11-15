@@ -114,4 +114,69 @@ router.get('/boards',(req,res)=>{
 	})
 });
 
+router.get('/subscribe/:boardName',passLoggedUser,(req,res)=>{
+	var baord = Board;
+	query = {$addToSet:{subscriberList:req.session._id}};
+	Board.findOneAndUpdate({boardName:req.params.boardName},query,(err,doc)=>{
+		if(err)
+			res.send("internal database error");
+		else
+			res.send("you have successfully subscribed the board");
+	});
+});
+
+router.get('/unSubscribe/:boardName',passLoggedUser,(req,res)=>{
+	var baord = Board;
+	query = {$pull:{subscriberList:req.session._id}};
+	Board.findOneAndUpdate({boardName:req.params.boardName},query,(err,doc)=>{
+		if(err)
+			res.send("internal database error");
+		else
+			res.send("you have successfully unsubscribed the board");
+	});
+});
+
+router.get('/addMember/:boardName/:userId',passLoggedUser,checkAdminStatus,(req,res)=>{
+	var baord = Board;
+	query = {$addToSet:{memberList:req.params.userId}};
+	Board.findOneAndUpdate({boardName:req.params.boardName},query,(err,doc)=>{
+		if(err)
+			res.send("internal database error");
+		else
+			res.send("you have successfully added member to the board");
+	});
+});
+
+router.get('/removeMember/:boardName/:userId',passLoggedUser,checkAdminStatus,(req,res)=>{
+	var baord = Board;
+	query = {$pull:{memberList:req.params.userId}};
+	Board.findOneAndUpdate({boardName:req.params.boardName},query,(err,doc)=>{
+		if(err)
+			res.send("internal database error");
+		else
+			res.send("you have successfully removed member from the board");
+	});
+});
+
+router.get('/revokeAllMembership/:userId',passLoggedUser,checkAdminStatus,(req,res)=>{
+	
+	query = {$pull:{memberList:req.params.userId}};
+	Board.update({memberList : req.params.userId},query,{multi:true},(err,raw)=>{
+		if(err){
+			res.send("Internal database error");
+		}else
+			res.send("true");
+	});
+})
+
+router.get('/revokeAllSubscription/:userId',passLoggedUser,checkAdminStatus,(req,res)=>{
+	
+	query = {$pull:{subscriberList:req.params.userId}};
+	Board.update({subscriberList : req.params.userId},query,{multi:true},(err,raw)=>{
+		if(err){
+			res.send("Internal database error");
+		}else
+			res.send("true");
+	});
+})
 module.exports = router;

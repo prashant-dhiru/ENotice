@@ -40,8 +40,10 @@ router.put('/notice',passLoggedUser,checkAdminStatus,(req,res)=>{
     
     var notice = new Notice(body);
     notice.save((err, insertedData) =>{	
-		  if (err)
+		  if (err){
+        console.log(err);
 				res.json({message : "internl database error"});
+      }
 			else 
 				res.json({
           message : "notice has been published",

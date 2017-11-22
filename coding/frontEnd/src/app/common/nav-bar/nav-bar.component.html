@@ -1,3 +1,15 @@
-<p>
-  nav-bar works!
-</p>
+<nav>
+	<div materialize class="nav-wrapper">
+		<a href="#" class="brand-logo left">E-Notice</a>
+		<ul id="nav-mobile" class="right hide-on-small-only">
+			<li><a href="#">Boards</a></li>
+			<li *ngIf="!isLogedIn; else elseBlock"><a href="user/login">Log In</a></li>
+			<ng-template #elseBlock>
+				<li><a href="sass.html">Profile</a></li>
+				<li><a href="badges.html">Manage</a></li>
+				<li><a *ngIf="isAdmin" href="collapsible.html">Admin Panel</a></li>
+			</ng-template>
+			<li *ngIf="isLogedIn"><a href="login.html">Log Out</a></li>
+		</ul>
+	</div>
+</nav>

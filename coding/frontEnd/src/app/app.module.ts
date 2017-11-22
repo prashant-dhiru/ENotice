@@ -1,3 +1,5 @@
+import 'materialize-css';
+import { MaterializeModule } from 'angular2-materialize'
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -10,8 +12,9 @@ import { RegisterComponent } from './user/register/register.component';
 //services
 import { RegisterService } from './services/register.service';
 import { LoginComponent } from './user/login/login.component';
-import { NavBarComponent } from './common/nav-bar/nav-bar.component'
-
+import { NavBarComponent } from './common/nav-bar/nav-bar.component';
+import { ListBoardComponent } from './board/list-board/list-board.component'
+import { UserComponent } from './user/user.component';
 
 
 @NgModule({
@@ -20,12 +23,15 @@ import { NavBarComponent } from './common/nav-bar/nav-bar.component'
     RegisterComponent,
     LoginComponent,
     NavBarComponent,
+    ListBoardComponent,
+    UserComponent
   ],
-  imports: [
+  imports: [ 
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MaterializeModule
   ],
   providers: [RegisterService],
   bootstrap: [AppComponent]

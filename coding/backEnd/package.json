@@ -2,6 +2,8 @@
   "name": "node-api",
   "main": "server.js",
   "dependencies": {
+    "bcrypt": "^1.0.3",
+    "bcryptjs": "^2.4.3",
     "body-parser": "*",
     "express": "*",
     "express-session": "^1.15.5",

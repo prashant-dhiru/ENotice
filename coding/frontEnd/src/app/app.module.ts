@@ -9,13 +9,14 @@ import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './user/register/register.component';
-//services
-import { RegisterService } from './services/register.service';
-import { LoginComponent } from './user/login/login.component';
-import { NavBarComponent } from './common/nav-bar/nav-bar.component';
 import { ListBoardComponent } from './board/list-board/list-board.component'
+import { NavBarComponent } from './common/nav-bar/nav-bar.component';
+import { LoginComponent } from './user/login/login.component';
 import { UserComponent } from './user/user.component';
+import { FooterComponent } from './common/footer/footer.component'
 
+//services
+import { UserService } from "./services/user.service";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { UserComponent } from './user/user.component';
     LoginComponent,
     NavBarComponent,
     ListBoardComponent,
-    UserComponent
+    UserComponent,
+    FooterComponent
   ],
   imports: [ 
     BrowserModule,
@@ -33,7 +35,7 @@ import { UserComponent } from './user/user.component';
     AppRoutingModule,
     MaterializeModule
   ],
-  providers: [RegisterService],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

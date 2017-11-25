@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Board } from '../../common/board';
+import { Board } from '../../classes/board';
 
 @Component({
   selector: 'enb-list-board',

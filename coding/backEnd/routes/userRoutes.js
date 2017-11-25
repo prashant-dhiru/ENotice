@@ -72,11 +72,11 @@ router.post("/user/login",passNonLoggedUser,(req,res)=>{
 	user.findOne({ email:body.email})
 			.exec(function (err,userData){
 				if( userData == null )
-					res.send({ message: "Username was not found" });
+					res.status(404).send("user was not found");
 				else if(bcrypt.compareSync(body.password, userData.password))
 					authenticateUser(req,res,userData);
 				else
-					res.send({ message: "password does not match" });
+					res.status(403).send("password does not match");
 			});
 });
 

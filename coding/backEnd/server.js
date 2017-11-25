@@ -13,15 +13,16 @@ const port = process.env.PORT || 3000;
 const {mongoose} = require('./db/mongoose');
 
 const app = express();
-
-app.use(cors({origin: 'http://localhost:4200'}));
+app.use(cors({credentials: true, origin: 'http://localhost:4200'}));
 app.use(bodyParser.json());
 //app.use(express.static(__dirname + '/Client/dist'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use( session ({
+	name : 'connect.sid',
+	httponly: false,
 	secret : process.env.SESSION_KEY,
-	resave: true,
-	saveUninitialized: false,
+	resave: false,
+	saveUninitialized: true,
 	store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 

@@ -31,12 +31,13 @@
     "materialize-css": "^0.100.2",
     "rxjs": "^5.1.0",
     "typescript": "2.4.2",
+    "validator": "^9.1.2",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
     "@angular/cli": "^1.5.3",
     "@types/jasmine": "2.5.38",
-    "@types/node": "~6.0.60",
+    "@types/node": "^6.0.92",
     "jasmine-core": "~2.5.2",
     "jasmine-spec-reporter": "~3.2.0",
     "karma": "~1.4.1",

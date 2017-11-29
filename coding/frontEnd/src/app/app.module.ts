@@ -15,10 +15,14 @@ import { LoginComponent } from './common/login/login.component';
 import { UserComponent } from './user/user.component';
 import { FooterComponent } from './common/footer/footer.component'
 import { UpdateComponent } from './user/update/update.component';
+import { ViewProfileComponent } from 'app/user/view-profile/view-profile.component';
 
 //services
 import { UserService } from "./services/user.service";
 import { BoardService } from './services/board.service';
+
+declare let require: any;
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +32,8 @@ import { BoardService } from './services/board.service';
     ListBoardComponent,
     UserComponent,
     FooterComponent,
-    UpdateComponent
+    UpdateComponent,
+    ViewProfileComponent
   ],
   imports: [ 
     ReactiveFormsModule,

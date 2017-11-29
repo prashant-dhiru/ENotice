@@ -4,19 +4,11 @@
 		<a 
 		materialize="sideNav" [materializeParams]="[{edge:'left'}]"
 		href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-		<ul id="dropdown1" class="dropdown-content">
-			<li><a routerLink="/user">User</a></li>
-			<li class="divider"></li>
-			<li><a routerLink="/user/profile/update">Update Profile</a></li>
-			<li><a routerLink="/user/reset">Reset Password</a></li>
-			<li><a routerLink="/user/subscription">My Subscription</a></li>
-			<li><a routerLink="/user/membership">My Memberships</a></li>
-		</ul>
 		<ul class="right hide-on-med-and-down">
 			<li><a routerLink="/boards">Boards</a></li>
 			<li *ngIf="!isLogedIn; else logedBlock"><a routerLink="/login">Log-In</a></li>
 			<ng-template #logedBlock >
-				<li><a materialize="dropdown" class="dropdown-button" data-activates="dropdown1">User<i class="material-icons right">arrow_drop_down</i></a></li>
+				<li><a routerLink="/user">User</a></li>
 				<li *ngIf="isAdmin"><a routerLink="">Admin Panel</a></li>
 				<li><a (click)="logOut()">Log-Out</a></li>
 			</ng-template>
@@ -25,6 +17,7 @@
 			<li><a routerLink="/boards">Boards</a></li>				
 			<li *ngIf="!isLogedIn; else logedBlockNav"><a routerLink="/login">Log-In</a></li>
 			<ng-template #logedBlockNav>
+					<li><a routerLink="/user">User</a></li>
 				<li *ngIf="isAdmin"><a routerLink="">Admin Panel</a></li>
 				<li><a (click)="logOut()" routerLink="">Log-Out</a></li>
 				<li class="diveder">

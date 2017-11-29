@@ -91,7 +91,7 @@ router.get("/user/:id",passLoggedUser,(req,res)=> {
 	var user = User;
 
 	user.findById(req.params.id)
-			.select('_id name email isAdmin')
+			.select('_id name email isAdmin phone registerationDate')
 			.exec(function (err,userData) {
 				if (userData == null)
 					res.status(400).send({message : "no one found"});
@@ -104,7 +104,7 @@ router.get("/user/:id",passLoggedUser,(req,res)=> {
 router.get("/me",passLoggedUser,(req,res)=> {
 	var user = User;
 	user.findById(req.session._id)
-			.select('_id name email isAdmin phone')
+			.select('_id name email isAdmin phone registerationDate')
 			.exec(function (err,userData) {
 					res.send(userData);
 			});

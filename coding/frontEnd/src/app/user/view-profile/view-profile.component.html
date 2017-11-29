@@ -1,0 +1,15 @@
+<div class="viewProfile">
+  <div class="row card">
+    <div class="col s12 m12 l3 picSection ">
+      <i class="large material-icons">account_circle</i>
+    </div>
+    <div class="col s12 m12 l7 infoSection">
+      <h5>{{user?.name}}</h5><hr>
+      <p *ngIf="user?.isAdmin">You <strong>have</strong> admin privilages</p>
+      <p *ngIf="!user?.isAdmin">You <strong>do not have</strong> admin privilages</p>
+      <p><strong>Email :</strong> {{user?.email}}</p>
+      <p><strong>Phone :</strong> {{user?.phone}}</p>
+      <p><strong>Date :</strong> {{user?.registerationDate | date:mediumDate}}</p>
+    </div>
+  </div>
+</div>

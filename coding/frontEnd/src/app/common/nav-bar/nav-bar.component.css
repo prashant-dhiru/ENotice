@@ -4,3 +4,7 @@
 .brand-logo{
 	padding-left: 30px;
 }
+
+.dropdown-content{
+	width: 200px !important;
+}

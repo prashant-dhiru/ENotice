@@ -1,0 +1,23 @@
+<div class="row">
+	<form  #loginForm="ngForm" class="col s12 l6 offset-l3">
+		<div class="form-bg z-depth-4">
+			<h2 align="center">Login Form</h2>
+			<div class="row">
+				<div class="input-field col s12">
+					<input id="email" type="email" ngModel name="email" class="validate" required>
+					<label for="email">Email</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s12">
+					<input id="password" type="password" ngModel name="password" class="validate" minlength="6" required> 
+					<label for="password">Password</label>
+				</div>
+				<button (click)="onSubmit(loginForm)" class="waves-effect waves-light btn-large" [disabled]="!loginForm.valid"><i class="material-icons left">send</i>Login</button>
+			</div>
+			<div class="row">
+				<a routerLink="/register"> Not Registered ? click here</a> <a class="right" routerLink="/common/forgotPassword/">Forgot Password</a>
+			</div>
+		</div>
+		</form>
+</div>

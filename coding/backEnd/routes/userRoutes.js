@@ -29,13 +29,13 @@ router.put('/user',validateUserInfo,hashingPassword, (req,res)=>{
 		user.save((err, insertedData) =>{
 			if (err && err.name == 'ValidationError')
 				for( feilds in err.errors){
-					res.json({message : err.errors[feilds].message});
+					res.status(400).send(err.errors[feilds].message);
 					break;
 				}
 			else if (err)
-				res.json({message : "internl database error"});
+				res.status(500).send("internl database error");
 			else 
-				res.json({message: "registration sucessfull, login to continue."});
+				res.send("registration sucessfull, login to continue");
 		});
 });
 
@@ -53,13 +53,13 @@ router.patch('/user',passLoggedUser,validateUpdateInfo, (req,res)=>{
 		User.findByIdAndUpdate(req.session._id,{name: user.name, email: user.email, phone: user.phone},(err,result)=>{
 			if (err && err.name == 'ValidationError')
 				for( feilds in err.errors){
-					res.send({message : err.errors[feilds].message});
+					res.status(400).send(err.errors[feilds].message);
 					break;
 				}
 			else if (err)
-				res.send({message : "internl database error"});
+				res.status(500).send({message : "internl database error"});
 			else 
-				res.send({message: "user's data updated"});	
+				res.send("user's data updated");	
 		});
 });
 
@@ -104,7 +104,7 @@ router.get("/user/:id",passLoggedUser,(req,res)=> {
 router.get("/me",passLoggedUser,(req,res)=> {
 	var user = User;
 	user.findById(req.session._id)
-			.select('_id name email isAdmin')
+			.select('_id name email isAdmin phone')
 			.exec(function (err,userData) {
 					res.send(userData);
 			});

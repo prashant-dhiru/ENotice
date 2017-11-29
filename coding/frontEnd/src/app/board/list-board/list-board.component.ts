@@ -1,5 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Board } from '../../classes/board';
+import { Subscription } from 'rxjs/Subscription';
+
+import { BoardService } from '../../services/board.service'
+import { Response } from '@angular/http/src/static_response';
+import { error } from 'selenium-webdriver';
+
 
 @Component({
   selector: 'enb-list-board',
@@ -8,11 +14,22 @@ import { Board } from '../../classes/board';
 })
 export class ListBoardComponent implements OnInit {
 
-  board : Board; 
-  constructor() {}
+  subscription : Subscription ;
+  boards;
+  constructor(private boardService : BoardService) {}
 
   ngOnInit() {
-    this.board = new Board('staff',3,'this is a board for staff');
+    this.getAllBoard();
   }
 
+  getAllBoard(){
+    this.subscription = this.boardService.getAllBoards().subscribe((response : Response)=>{
+      this.boards = response.json();
+      console.log(this.boards);
+    },(error: any)=>{
+      console.log('error occured while fetching the boards');
+    },()=>{
+      this.subscription.unsubscribe();
+    })
+  }
 }

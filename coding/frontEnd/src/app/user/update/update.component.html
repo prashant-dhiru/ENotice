@@ -1,0 +1,28 @@
+<div>
+  <h4>Update Profile</h4>
+  <hr>
+  <div class="col s12">
+  <form [formGroup]="updateForm">
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="name" type="text" class="validate" formControlName="name"> 
+          <label for="name" class="active">Full Name</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="email" type="email" class="validate" formControlName="email">
+          <label for="email" class="active">Email</label>
+        </div>
+      </div>
+
+      <div class="row">
+          <div class="input-field col s12">
+            <input id="phone" type="tel" class="validate" formControlName="phone">
+            <label for="phone" class="active">Phone Number</label>
+          </div>
+      </div>
+      <button type="button" (click)="onUpdate()" class="btn btn-large"> Update Info</button>
+    </form>
+  </div>
+</div>

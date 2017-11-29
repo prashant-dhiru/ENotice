@@ -1,8 +1,8 @@
 import { NgForm } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
-import { Response } from '@angular/http'
-import { Router } from '@angular/router'
+import { Response } from '@angular/http';
+import { Router } from '@angular/router';
 
 import { UserService } from "../../services/user.service";
 import { User } from 'app/classes/User';
@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
   }
+
   onSubmit(loginForm: NgForm): void {
     this.loginData = loginForm.value;
     this.subscription = this.http.LoginUser(this.loginData).subscribe((response: Response) => {

@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import {} from './login/login.component'
+import { ListBoardComponent } from '../board/list-board/list-board.component';
 
 @Component({
   selector: 'enb-user',
-  template: `
-    <router-outlet>
-    </router-outlet>
-    `
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
+  isAdmin = false;
 
-  constructor() { }
-
+  constructor() { 
+  }
+  
   ngOnInit() {
+    this.isAdmin = (localStorage.getItem('adminStatus') === 'true')?true:false;  
   }
 
 }

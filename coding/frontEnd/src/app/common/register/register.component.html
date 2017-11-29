@@ -1,0 +1,73 @@
+<div class="row">
+  <form [formGroup]="regForm" class="col s12 l6 offset-l3"> 
+    <div class="depthClass z-depth-4">
+      <h3 align="center">Registration Form</h3>
+      <div class="row">
+        <div class="input-field col s6">
+          <input  
+            id="first_name" 
+            type="text" 
+            class="validate" 
+            name="first_name" 
+            formControlName="first_name"
+            required />
+          <label for="first_name">First Name</label>
+        </div>
+        <div class="input-field col s6">
+          <input 
+            id="last_name" 
+            type="text" 
+            class="validate" 
+            name="last_name" 
+            formControlName="last_name"
+            required />
+          <label for="last_name">Last Name</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input 
+            id="password" 
+            type="password" 
+            class="validate" 
+            name="password" 
+            minlength=6 
+            formControlName="password"
+            required />
+          <label for="password">Password</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input 
+            id="rtpassword" 
+            type="password" 
+            class="validate" 
+            name="rtpassword"  
+            minlength=6 
+            formControlName="rtpassword"
+            required />
+          <label for="retype password">Retype Password</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input 
+            id="email" 
+            type="email" 
+            class="validate" 
+            name="email" 
+            formControlName="email"
+            required />
+          <label for="email">Email</label>
+        </div>
+      </div>
+      <div class="row">
+        <button (click)="onSubmit()" class="waves-effect waves-light btn-large" [disabled]="!regForm.valid"><i class="material-icons left">person_add</i>Submit</button>
+      </div>
+      <div class="row">
+        <a routerLink="/login"> Already Registered ? Login Here</a>
+      </div>
+    </div>
+  </form>
+</div>

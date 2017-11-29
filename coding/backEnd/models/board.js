@@ -32,12 +32,16 @@ var boardSchema = new mongoose.Schema({
 	memberList:[{						//only for private boards
 		type: mongoose.Schema.Types.ObjectId, 
 		ref:'User'
-	}]/* ,
+	}] ,
 	artcialHosted:[{
-		type : Schema.Types.ObjectId,
+		type : mongoose.Schema.Types.ObjectId,
 		ref: 'Artical'
-	}]
-	*/
+	}],
+	discription:{
+		type:String,
+		require : [true,"discription of the board is required"],
+		maxlength : [1024,"discribe the notice board within 1024 character"]
+	}
 
 },{collection: 'boards'});
 

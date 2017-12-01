@@ -16,10 +16,12 @@ import { UserComponent } from './user/user.component';
 import { FooterComponent } from './common/footer/footer.component'
 import { UpdateComponent } from './user/update/update.component';
 import { ViewProfileComponent } from 'app/user/view-profile/view-profile.component';
+import { ViewSingleBoardComponent } from './board/view-single-board/view-single-board.component';
 
 //services
 import { UserService } from "./services/user.service";
 import { BoardService } from './services/board.service';
+import { NoticeService } from './services/notice.service';
 
 declare let require: any;
 
@@ -33,7 +35,8 @@ declare let require: any;
     UserComponent,
     FooterComponent,
     UpdateComponent,
-    ViewProfileComponent
+    ViewProfileComponent,
+    ViewSingleBoardComponent
   ],
   imports: [ 
     ReactiveFormsModule,
@@ -43,7 +46,7 @@ declare let require: any;
     AppRoutingModule,
     MaterializeModule
   ],
-  providers: [UserService,BoardService],
+  providers: [UserService,BoardService,NoticeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

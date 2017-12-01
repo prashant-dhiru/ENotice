@@ -6,14 +6,14 @@
     </div> -->
             
     <div *ngFor="let board of boards" class="col s12 l6 m8 offset-m3 offset-l3">
-    <div class="card grey lighten-5">
+    <div class="card grey lighten-5 z-depth-2">
       <div class="card-content">
-        <span class="card-title bold"><a routerLink = "/board/{{board?.boardName}}">{{board?.boardName}}</a></span>
+        <span class="card-title bold"><a routerLink = "/board/{{board?._id}}">{{board?.boardName}}</a></span>
         <p>{{board?.discription}}
         </p>
       </div>
-      <div class="card-action z-depth-1">
-        <a href="#">View Notices on board</a>
+      <div class="card-action z-depth-2">
+        <a routerLink="/board/{{board?._id}}">View Notices on board</a>
         <a class="right">Subscribe this board</a>
       </div>
     </div>

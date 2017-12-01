@@ -33,10 +33,10 @@ var boardSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId, 
 		ref:'User'
 	}] ,
-	artcialHosted:[{
-		type : mongoose.Schema.Types.ObjectId,
-		ref: 'Artical'
-	}],
+	// artcialHosted:[{
+	// 	type : mongoose.Schema.Types.ObjectId,
+	// 	ref: 'Artical'
+	// }],
 	discription:{
 		type:String,
 		require : [true,"discription of the board is required"],

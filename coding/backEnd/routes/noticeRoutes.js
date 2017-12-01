@@ -53,15 +53,33 @@ router.put('/notice',passLoggedUser,checkAdminStatus,(req,res)=>{
   });
 
 });
-/*
-router.get('notice/:noticeId',(req,res)=>{
+
+//get single board using id
+
+router.get('/notice/:noticeId',(req,res)=>{
 	var notice = Notice;
 	notice.findById(req.params.noticeId)
 	.exec(function(err,result){
 		if(result == null){
 			res.send("no result found");
-		}else if (){}
+		}else{
+      res.send(result);
+    }
 	});
 });
-*/
+
+router.get('/noticeForBoard/:boardId',(req,res)=>{
+  var notice = Notice;
+  notice.find({publishBoards:req.params.boardId})
+  .populate('publisher','name')
+  .sort({publishDate: -1})
+  .exec(function(err,result){
+    if(result == null ||  result.length == 0){
+      res.status(404).send("no artical in this board");
+    }else{
+      res.send(result)
+    }
+  });
+});
+
 module.exports = router;	

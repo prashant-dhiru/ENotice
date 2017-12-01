@@ -48,6 +48,6 @@ var userSchema = new mongoose.Schema({
 
 
 userSchema.plugin(uniqueValidator, {message: '{VALUE} already in use.'});
-var User = mongoose.model('userData',userSchema);
+var User = mongoose.model('user',userSchema);
 
 module.exports = {User};

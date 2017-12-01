@@ -1,10 +1,11 @@
 <div class="row">	
 	<div class="sideBar col s12 m3 l2 " >
 		<ul class="collection with-header">
-			<li class="collection-item grey lighten-2">User</li>
+			<li class="collection-item grey lighten-2"><a routerLink="/user">User</a></li>
 			<li class="collection-item"><a routerLink="/user/update">Update profile</a></li>
 			<li class="collection-item"><a>My Subscription</a></li>
 			<li class="collection-item"><a>My Membership</a></li>
+			<li class="collection-item"><a>Delete Account</a></li>			
 			<div *ngIf="isAdmin">
 			<li class="collection-item grey lighten-2">Admin</li>
 			<li class="collection-item"><a>Post Notice</a></li>

@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col l6 offset-l3 m6 offset-m3 s12 notices">
+    <ul materialize="collapsible" class="collapsible" data-collapsible="expandable">
+      <li *ngFor="let notice of notices">
+        <div class="collapsible-header">
+          <span class="left"> {{notice?.title}}</span>
+          <span class="right grey-text lighten-2">{{notice?.publishDate | date:mediumDate}}</span>
+        </div>
+        <div class="collapsible-body">
+          <span>{{notice?.textData}}</span>
+          <br><br><hr>
+          <span class ="grey-text lighten-2">Publisher : {{notice?.publisher?.name}} </span><br>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

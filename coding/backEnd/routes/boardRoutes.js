@@ -106,7 +106,9 @@ router.get('/boards',(req,res)=>{
 	else if(req.session.isAdmin == true)
 		query = {}
 	
-	board.find(query,(err,result)=>{
+	board.find(query)
+	.sort({buildDate:1})
+	.exec(function (err,result){
 		if(err)
 			res.send("internal database error");
 		else

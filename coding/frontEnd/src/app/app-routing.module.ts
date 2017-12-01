@@ -8,6 +8,7 @@ import { LoginComponent } from 'app/common/login/login.component';
 import { combineAll } from 'rxjs/operators/combineAll';
 import { componentFactoryName } from '@angular/compiler';
 import { RegisterComponent } from 'app/common/register/register.component';
+import { boardRoutes } from './board/board-route.module';
 
 const routes: Routes = [
   {
@@ -29,6 +30,9 @@ const routes: Routes = [
   },{
     path :'register',
     component : RegisterComponent
+  },{
+    path : 'board',
+    children : boardRoutes
   }
 ];
 
@@ -36,4 +40,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

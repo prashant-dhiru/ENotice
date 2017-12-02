@@ -33,7 +33,7 @@ router.put('/notice',passLoggedUser,checkAdminStatus,(req,res)=>{
 		}
 
     body = req.body;
-    body = _.pick(body,['textData','publisher','publishBoards'])
+    body = _.pick(body,['textData','publisher','publishBoards','title']);
 		fileName = _.map(req.files,"filename");
     _.set(body,'attachedFiles',fileName);
     _.set(body,'publisher',req.session._id);

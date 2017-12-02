@@ -30,7 +30,7 @@ router.put('/board',passLoggedUser,checkAdminStatus,(req,res)=>{
 });
 
 
-router.get('/board/:boardName',(req,res)=>{
+router.get('/board/:boardId',(req,res)=>{
 	var board = Board;
 	var condition = null;
 	
@@ -41,14 +41,13 @@ router.get('/board/:boardName',(req,res)=>{
 	else if(req.session.isAdmin == true)
 		condition = {}
 
-
-	board.findOne({boardName : req.params.boardName}).
+	board.findOne({_id : req.params.boardId}).
 	where(condition).
 	then((result,err)=>{
 		if(err)
-			res.send("internal database error = "+ err);
+			res.status(500).send("internal database error = "+ err);
 		else if(result == null)
-			res.send( req.params.boardName + " board was not found");
+			res.status(404).send( req.params.boardName + " board was not found");
 		else
 			res.send(result);
 	})
@@ -181,4 +180,14 @@ router.get('/revokeAllSubscription/:userId',passLoggedUser,checkAdminStatus,(req
 			res.send("true");
 	});
 })
+
+router.get('/getAllSubscribedBoard',passLoggedUser,(req,res)=>{
+	Board.find({subscriberList:req.session._id},(err,result)=>{
+		if(err)
+			res.status(500).send("internal database error");
+		else
+			res.send(result);
+	});
+});
+
 module.exports = router;

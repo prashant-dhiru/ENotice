@@ -11,4 +11,8 @@ export class BoardService {
 	getAllBoards(){
 		return this.http.get('http://localhost:3000/boards', {withCredentials: true});
 	}
+
+	getBoard(BoardId){
+		return this.http.get("http://localhost:3000/board/"+BoardId,{withCredentials : true});
+	}
 }

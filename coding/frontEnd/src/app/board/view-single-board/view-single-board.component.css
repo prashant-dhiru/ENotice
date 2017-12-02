@@ -1,3 +1,24 @@
+.active{
+
+}
+.inactive{
+	
+}
+.btn{
+	background-color: #4285F4;
+}
+
 .left{
 	width: 80% !important;
+}
+
+.material-icons{
+	color: grey;
+}
+
+.discription{
+	text-align:justify;
+}
+.textData{
+	text-align:justify;	
 }

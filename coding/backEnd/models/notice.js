@@ -8,6 +8,11 @@ const User = require('./user');
 mongoose.Promise = global.Promise;
 
 var noticeSchema = new mongoose.Schema({
+	title:{
+		type : String,
+		require : [true,"The notice must have a subject"],
+		maxlength : [140,"the subject should not be more then 140 character long"]
+	},
 	textData : {
 		type : String,
 		require : [true, "The Notice must have text data"],
@@ -33,6 +38,10 @@ var noticeSchema = new mongoose.Schema({
 		ref : 'user'
 	}],
 	comment : [{
+		commentId : {
+			type:Date,
+			default: Date.now()
+		},
 		userId : {
 			type : mongoose.Schema.Types.ObjectId,
 			ref : 'user'

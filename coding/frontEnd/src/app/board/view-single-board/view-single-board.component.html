@@ -1,5 +1,38 @@
+<br>
 <div class="row">
-  <div class="col l6 offset-l3 m6 offset-m3 s12 notices">
+  <div class="col card l2 m3 s12 offset-l1">
+    <div class="boardInfo">
+      <h4>{{board?.boardName}}</h4>
+      <hr>
+      <div *ngIf="!subscribedToBoard; else elseBlock1" >
+        <a class="btn btn-block ">Subscribe</a>
+      </div>
+      <ng-template #elseBlock1 >
+        <a class="btn btn-block ">Unsubscribe</a>        
+      </ng-template>
+      <p>{{board?.buildDate | date:mediumDate}}</p> 
+      <div *ngIf="board?.isPrivate; else elseBlock2">
+        <p>This is a private board</p>
+      </div>
+      <ng-template #elseBlock2>
+          <p>This is a public board</p>          
+      </ng-template>
+      <p class="grey-text discription">"{{board?.discription}}"</p>
+      <!-- <div class="BoardMembers">
+        <hr>
+        <ul class="collapsible z-depth-0 " style="border-color: transparent;" data-collapsible="accordion">
+          <li>
+            <div class="collapsible-header" style="border-color: transparent;" >Members</div>
+            <div class="collapsible-body" style="border-color: transparent;" >
+              <li>prashant</li>
+              <li>himanshu</li>
+            </div>
+          </li>
+        </ul>
+      </div> -->
+    </div>
+  </div>
+  <div class="col l6 offset-l1 m6 offset-m1 s12 notices">
     <ul materialize="collapsible" class="collapsible" data-collapsible="expandable">
       <li *ngFor="let notice of notices">
         <div class="collapsible-header">
@@ -7,9 +40,19 @@
           <span class="right grey-text lighten-2">{{notice?.publishDate | date:mediumDate}}</span>
         </div>
         <div class="collapsible-body">
-          <span>{{notice?.textData}}</span>
-          <br><br><hr>
-          <span class ="grey-text lighten-2">Publisher : {{notice?.publisher?.name}} </span><br>
+          <span class =" left grey-text lighten-2">Publisher : {{notice?.publisher?.name}} </span>
+          <span class="grey-text lighten-2"><i class=" tiny material-icons">visibility</i> {{notice?.userViwed.length}}</span>
+          <hr>
+          <br>
+          <div class="textData">
+            <span>{{notice?.textData}}</span>
+          </div>
+          <br><br>
+          <div>
+            <a class="grey-text light-2" href="">Mark View</a>
+            &ensp;&ensp;&ensp;
+            <a class="grey-text light-2" href="" >Comment</a>
+          </div>
         </div>
       </li>
     </ul>

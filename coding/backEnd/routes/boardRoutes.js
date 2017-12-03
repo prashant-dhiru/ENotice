@@ -115,10 +115,10 @@ router.get('/boards',(req,res)=>{
 	})
 });
 
-router.get('/subscribe/:boardName',passLoggedUser,(req,res)=>{
+router.get('/subscribe/:boardId',passLoggedUser,(req,res)=>{
 	var baord = Board;
 	query = {$addToSet:{subscriberList:req.session._id}};
-	Board.findOneAndUpdate({boardName:req.params.boardName},query,(err,doc)=>{
+	Board.findOneAndUpdate({_id:req.params.boardId},query,(err,doc)=>{
 		if(err)
 			res.status(500).send("internal database error");
 		else
@@ -126,12 +126,12 @@ router.get('/subscribe/:boardName',passLoggedUser,(req,res)=>{
 	});
 });
 
-router.get('/unSubscribe/:boardName',passLoggedUser,(req,res)=>{
+router.get('/unSubscribe/:boardId',passLoggedUser,(req,res)=>{
 	var baord = Board;
 	query = {$pull:{subscriberList:req.session._id}};
-	Board.findOneAndUpdate({boardName:req.params.boardName},query,(err,doc)=>{
+	Board.findOneAndUpdate({_id:req.params.boardId},query,(err,doc)=>{
 		if(err)
-			res.send("internal database error");
+			res.status(500).send("internal database error");
 		else
 			res.send("you have successfully unsubscribed the board");
 	});

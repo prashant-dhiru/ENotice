@@ -21,8 +21,10 @@ export class BoardService {
 	getAllMembershipBoard(){
 		return this.http.get("http://localhost:3000/getAllMembershipBoard",{withCredentials:true});
 	}
-
 	subscribeBoard(BoardId){
 		return this.http.get("http://localhost:3000/subscribe/"+BoardId ,{withCredentials:true});
+	}
+	unSubscribeBoard(BoardId){
+		return this.http.get("http://localhost:3000/unSubscribe/"+BoardId ,{withCredentials:true});
 	}
 }

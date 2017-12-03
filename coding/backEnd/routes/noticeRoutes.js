@@ -72,6 +72,7 @@ router.get('/noticeForBoard/:boardId',(req,res)=>{
   var notice = Notice;
   notice.find({publishBoards:req.params.boardId})
   .populate('publisher','name')
+  .populate('userViwed','name')
   .sort({publishDate: -1})
   .exec(function(err,result){
     if(result == null ||  result.length == 0){

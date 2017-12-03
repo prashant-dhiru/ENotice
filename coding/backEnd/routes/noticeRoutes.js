@@ -82,4 +82,16 @@ router.get('/noticeForBoard/:boardId',(req,res)=>{
   });
 });
 
+router.get('/notice/viewed/:noticeId',(req,res)=>{
+  Notice.findByIdAndUpdate(req.params.noticeId,{$addToSet:{userViwed: req.session._id }})
+  .exec(function(err,result){
+    if(err){
+      res.status(500).send("internal database error");
+    }else if(result == null ){
+      res.status(404).send("this artical is not present for viewing.");
+    }else{
+      res.send("notice marked as viewed");
+    }
+  })
+});
 module.exports = router;	

@@ -22,3 +22,6 @@
 .textData{
 	text-align:justify;	
 }
+.markView{
+	cursor: pointer;
+}

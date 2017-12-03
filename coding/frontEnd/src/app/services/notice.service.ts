@@ -11,4 +11,9 @@ export class NoticeService {
   getNoticeForBoard(boardId){
     return this.http.get('http://localhost:3000/noticeForBoard/'+boardId,{withCredentials: true});
   }
+
+  markView(noticeId){
+    return this.http.get('http://localhost:3000/notice/viewed/'+noticeId,{withCredentials: true});
+    
+  }
 }

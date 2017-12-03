@@ -5,6 +5,7 @@ import { Response } from '@angular/http/src/static_response';
 import { Subscription } from 'rxjs/Subscription';
 import * as _ from 'lodash';
 import { BoardService } from 'app/services/board.service';
+import { concat } from 'rxjs/observable/concat';
 
 @Component({
   selector: 'enb-view-single-board',
@@ -18,10 +19,11 @@ export class ViewSingleBoardComponent implements OnInit {
   boardSubscription:Subscription;
   board:any;
   subscribedToBoard:boolean;
-  notices:any;
+  notices:any[];
   loaded:boolean;
   userId:String;
   user:any; 
+  markViewSub : Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -64,5 +66,21 @@ export class ViewSingleBoardComponent implements OnInit {
     
   }
 
-
+  markView(noticeId:string,noticeIndex:number){
+    this.markViewSub = this.noticeService.markView(noticeId)
+    .subscribe((response:Response)=>{
+      if(!this.notices[noticeIndex].userViwed.includes(this.user._id)){
+        this.notices[noticeIndex].userViwed.push(this.user._id);
+      }
+    },(error)=>{
+      if(error.status === 500){
+        console.error("internal database error");
+      }
+      else if (error.status=== 404){
+        console.log("notice was not found to mark as viewed, please refresh page");
+      }else{
+        console.log("error while marking a notice as view");
+      }
+    })
+  }
 }

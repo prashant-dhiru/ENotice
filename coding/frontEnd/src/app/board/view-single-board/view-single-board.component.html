@@ -34,7 +34,7 @@
   </div>
   <div class="col l6 offset-l1 m6 offset-m1 s12 notices">
     <ul materialize="collapsible" class="collapsible" data-collapsible="expandable">
-      <li *ngFor="let notice of notices">
+      <li *ngFor="let notice of notices; let i = index">
         <div class="collapsible-header">
           <span class="left"> {{notice?.title}}</span>
           <span class="right grey-text lighten-2">{{notice?.publishDate | date:mediumDate}}</span>
@@ -49,7 +49,7 @@
           </div>
           <br><br>
           <div>
-            <a class="grey-text light-2" href="">Mark View</a>
+            <a class="grey-text light-2 markView" (click)="markView(notice._id,i)" >Mark View</a>
             &ensp;&ensp;&ensp;
             <a class="grey-text light-2" href="" >Comment</a>
           </div>

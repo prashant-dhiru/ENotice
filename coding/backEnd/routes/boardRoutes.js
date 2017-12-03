@@ -190,4 +190,12 @@ router.get('/getAllSubscribedBoard',passLoggedUser,(req,res)=>{
 	});
 });
 
+router.get('/getAllMembershipBoard',passLoggedUser,(req,res)=>{
+	Board.find({memberList:req.session._id},(err,result)=>{
+		if(err)
+			res.status(500).send("internal database error");
+		else
+			res.send(result);
+	});
+});
 module.exports = router;

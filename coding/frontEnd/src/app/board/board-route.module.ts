@@ -8,7 +8,7 @@ export const boardRoutes: Routes = [
     children: [],
   },{
     path : ':BoardId',
-    component: ViewSingleBoardComponent
-  }
+    component : ViewSingleBoardComponent
+  },
 ]
 

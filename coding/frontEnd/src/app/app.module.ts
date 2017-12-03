@@ -17,7 +17,8 @@ import { FooterComponent } from './common/footer/footer.component'
 import { UpdateComponent } from './user/update/update.component';
 import { ViewProfileComponent } from 'app/user/view-profile/view-profile.component';
 import { ViewSingleBoardComponent } from './board/view-single-board/view-single-board.component';
-
+import { ViewSubscriptionComponent } from './user/view-subscription/view-subscription.component';
+import { ViewMembershipComponent } from './user/view-membership/view-membership.component'
 //services
 import { UserService } from "./services/user.service";
 import { BoardService } from './services/board.service';
@@ -36,7 +37,9 @@ declare let require: any;
     FooterComponent,
     UpdateComponent,
     ViewProfileComponent,
-    ViewSingleBoardComponent
+    ViewSingleBoardComponent,
+    ViewSubscriptionComponent,
+    ViewMembershipComponent
   ],
   imports: [ 
     ReactiveFormsModule,

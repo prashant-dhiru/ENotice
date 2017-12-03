@@ -15,4 +15,10 @@ export class BoardService {
 	getBoard(BoardId){
 		return this.http.get("http://localhost:3000/board/"+BoardId,{withCredentials : true});
 	}
+	getAllSubscribedBoard(){
+		return this.http.get("http://localhost:3000/getAllSubscribedBoard",{withCredentials:true});
+	}
+	getAllMembershipBoard(){
+		return this.http.get("http://localhost:3000/getAllMembershipBoard",{withCredentials:true});
+	}
 }

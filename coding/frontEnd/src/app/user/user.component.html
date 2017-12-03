@@ -3,8 +3,8 @@
 		<ul class="collection with-header">
 			<li class="collection-item grey lighten-2"><a routerLink="/user">User</a></li>
 			<li class="collection-item"><a routerLink="/user/update">Update profile</a></li>
-			<li class="collection-item"><a>My Subscription</a></li>
-			<li class="collection-item"><a>My Membership</a></li>
+			<li class="collection-item"><a routerLink="/user/subscribed">My Subscription</a></li>
+			<li class="collection-item"><a routerLink="/user/membership">My Membership</a></li>
 			<li class="collection-item"><a>Delete Account</a></li>			
 			<div *ngIf="isAdmin">
 			<li class="collection-item grey lighten-2">Admin</li>
@@ -16,7 +16,7 @@
 		</ul>
 	</div>
 
-	<div class="col s12 m6 l8 offset-m1 offset-l1 mainSection">
+	<div class="col s12 m6 l6 offset-m1 offset-l1 mainSection">
 		<router-outlet></router-outlet>
 	</div>
 </div>

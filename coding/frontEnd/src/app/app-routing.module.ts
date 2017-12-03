@@ -9,6 +9,7 @@ import { combineAll } from 'rxjs/operators/combineAll';
 import { componentFactoryName } from '@angular/compiler';
 import { RegisterComponent } from 'app/common/register/register.component';
 import { boardRoutes } from './board/board-route.module';
+import { ViewSubscriptionComponent } from './user/view-subscription/view-subscription.component';
 
 const routes: Routes = [
   {

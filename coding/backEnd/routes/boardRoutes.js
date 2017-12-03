@@ -120,7 +120,7 @@ router.get('/subscribe/:boardName',passLoggedUser,(req,res)=>{
 	query = {$addToSet:{subscriberList:req.session._id}};
 	Board.findOneAndUpdate({boardName:req.params.boardName},query,(err,doc)=>{
 		if(err)
-			res.send("internal database error");
+			res.status(500).send("internal database error");
 		else
 			res.send("you have successfully subscribed the board");
 	});

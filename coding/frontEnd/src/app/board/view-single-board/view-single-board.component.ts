@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs/Subscription';
 import * as _ from 'lodash';
 import { BoardService } from 'app/services/board.service';
 import { concat } from 'rxjs/observable/concat';
+import { MaterializeAction } from 'angular2-materialize';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'enb-view-single-board',
@@ -24,6 +26,7 @@ export class ViewSingleBoardComponent implements OnInit {
   userId:String;
   user:any; 
   markViewSub : Subscription;
+  usersViewd:any[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -76,11 +79,24 @@ export class ViewSingleBoardComponent implements OnInit {
       if(error.status === 500){
         console.error("internal database error");
       }
-      else if (error.status=== 404){
+      else if (error.status === 404){
         console.log("notice was not found to mark as viewed, please refresh page");
       }else{
         console.log("error while marking a notice as view");
       }
     })
+  }
+
+  onSubscribe(boardId){
+
+  }
+
+  modalActions = new EventEmitter<string|MaterializeAction>();
+  openModal(i) {
+    this.usersViewd = (this.notices[i].userViwed); 
+    this.modalActions.emit({action:"modal",params:['open']});
+  }
+  closeModal() {
+    this.modalActions.emit({action:"modal",params:['close']});
   }
 }

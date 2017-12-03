@@ -41,7 +41,12 @@
         </div>
         <div class="collapsible-body">
           <span class =" left grey-text lighten-2">Publisher : {{notice?.publisher?.name}} </span>
-          <span class="grey-text lighten-2"><i class=" tiny material-icons">visibility</i> {{notice?.userViwed.length}}</span>
+          <span class="grey-text lighten-2 openView">
+            <i class=" tiny material-icons">visibility</i> {{notice?.userViwed.length}}
+          </span>
+          <a data-target="modal1" class="waves-effect waves-light btn modal-trigger" (click)="openModal(i)">Modal</a>
+          
+         <!-- Modal Structure -->
           <hr>
           <br>
           <div class="textData">
@@ -55,6 +60,20 @@
           </div>
         </div>
       </li>
+      <div id="modal1" class="modal bottom-sheet" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions">
+          <div class="modal-content">
+            <h4>Modal Header</h4>
+            <p>A bunch of text</p>
+            <ul>
+              <li *ngFor="let userViewd of usersViewd">{{userViewd}}</li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <a class="waves-effect waves-green btn-flat" (click)="closeModal()">Close</a>
+            <a class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+          </div>
+        </div>
+
     </ul>
   </div>
 </div>

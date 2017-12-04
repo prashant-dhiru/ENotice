@@ -4,7 +4,7 @@ import { UpdateComponent } from './update/update.component';
 import { ViewProfileComponent} from './view-profile/view-profile.component';
 import { ViewSubscriptionComponent } from 'app/user/view-subscription/view-subscription.component';
 import { ViewMembershipComponent } from 'app/user/view-membership/view-membership.component';
-
+import { DeleteMeComponent } from './delete-me/delete-me.component';
 export const userRoutes: Routes = [
   {
     path: '',
@@ -19,6 +19,9 @@ export const userRoutes: Routes = [
   },{
     path: 'membership',
     component : ViewMembershipComponent
+  },{
+    path : 'deleteMe',
+    component : DeleteMeComponent
   }
 ]
 

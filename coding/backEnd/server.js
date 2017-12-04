@@ -26,6 +26,7 @@ app.use( session ({
 	store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
+app.use(express.static(path.join(__dirname,'../frontEnd/dist')));
 app.use(require('./routes/userRoutes'));
 app.use(require('./routes/boardRoutes'));
 app.use(require('./routes/noticeRoutes'));

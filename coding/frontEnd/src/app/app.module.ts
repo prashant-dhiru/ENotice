@@ -19,10 +19,12 @@ import { ViewProfileComponent } from 'app/user/view-profile/view-profile.compone
 import { ViewSingleBoardComponent } from './board/view-single-board/view-single-board.component';
 import { ViewSubscriptionComponent } from './user/view-subscription/view-subscription.component';
 import { ViewMembershipComponent } from './user/view-membership/view-membership.component'
+import { DeleteMeComponent } from './user/delete-me/delete-me.component';
 //services
 import { UserService } from "./services/user.service";
 import { BoardService } from './services/board.service';
 import { NoticeService } from './services/notice.service';
+import { PostNoticeComponent } from './admin/post-notice/post-notice.component';
 
 declare let require: any;
 
@@ -39,7 +41,9 @@ declare let require: any;
     ViewProfileComponent,
     ViewSingleBoardComponent,
     ViewSubscriptionComponent,
-    ViewMembershipComponent
+    ViewMembershipComponent,
+    DeleteMeComponent,
+    PostNoticeComponent
   ],
   imports: [ 
     ReactiveFormsModule,

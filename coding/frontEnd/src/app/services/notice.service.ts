@@ -14,7 +14,10 @@ export class NoticeService {
   }
 
   markView(noticeId){
-    return this.http.get(environment.apiUrl+'notice/viewed/'+noticeId,{withCredentials: true});
-    
+    return this.http.get(environment.apiUrl + 'notice/viewed/'+noticeId,{withCredentials: true}); 
+  }
+
+  putNotice(noticeData){
+    return this.http.put(environment.apiUrl + "notice",noticeData,{withCredentials:true}); 
   }
 }

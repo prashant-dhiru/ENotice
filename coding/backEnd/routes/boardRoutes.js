@@ -19,13 +19,13 @@ router.put('/board',passLoggedUser,checkAdminStatus,(req,res)=>{
 	board.save((err, insertedData) =>{
 		if (err && err.name == 'ValidationError')
 			for( feilds in err.errors){
-				res.json({message : err.errors[feilds].message});
+				res.status(400).send({message : err.errors[feilds].message});
 				break;
 			}
 		else if (err)
-			res.json({message : "internl database error"});
+			res.status(500).send("internl database error");
 		else 
-			res.json({message: "New board successfully created"});
+			res.send("New board successfully created");
 	});
 });
 
@@ -109,7 +109,7 @@ router.get('/boards',(req,res)=>{
 	.sort({buildDate:1})
 	.exec(function (err,result){
 		if(err)
-			res.send("internal database error");
+			res.status(500).send("internal database error");
 		else
 			res.send(result);
 	})

@@ -1,3 +1,62 @@
-<p>
-  post-notice works!
-</p>
+<div class="form-card">
+  <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
+    <li>
+      <div class="collapsible-header active">
+        <strong>Post Notice</strong>
+      </div>
+      <div class="collapsible-body">
+        <!-- body of primary data of notice -->
+        <form [formGroup]="postForm">
+          <div class="row">
+            <div class="input-field">
+              <input 
+                id="title" 
+                type="text" 
+                class="validate" 
+                minlength="1"
+                formControlName="title"                
+                required>
+              <label for="title">Title</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field">
+              <textarea 
+                id="textData" 
+                class="materialize-textarea"
+                formControlName="textData"                              
+                required>
+              </textarea>
+              <label for="textData">Content</label>
+            </div>
+          </div>
+          <div class="row">
+              <select 
+                multiple 
+                id="publishBoards"
+                materialize="material_select" 
+                [materializeSelectOptions]="allBoards" 
+                formControlName="publishBoards"
+                required>
+                  <option value="" disabled selected>Select Notice Board to host ...</option>
+                  <option *ngFor="let board of allBoards" [value]="board._id">{{board.boardName}}</option>
+              </select>  
+          </div> 
+        </form>
+      </div>
+    </li>
+    <li>
+      <div class="collapsible-header">
+        <strong>Attach File</strong>
+      </div>
+      <div class="collapsible-body">
+        <!--section for notice file upload -->
+        <input #fileInput multiple type="file"/>
+        <button class="btn" (click)="addFile()">Add</button>
+      </div>
+    </li>
+    <li>
+      <div class="collapsible-header"><button class="btn" (click)="onSubmit()"  >submit</button></div>
+    </li>
+  </ul>
+</div>

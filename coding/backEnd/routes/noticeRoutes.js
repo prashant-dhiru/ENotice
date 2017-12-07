@@ -25,19 +25,22 @@ const {checkAdminStatus}= require('../middleware/authenticationFunction');
 
 
 router.put('/notice',passLoggedUser,checkAdminStatus,(req,res)=>{
+  
   upload(req, res, function (err) {
     if (err) {
       res.send("all file must be of type png/jpeg/jpg");
       console.log(err);
       return;
-		}
-
+    }
+    
+    console.log(req.files);
     body = req.body;
     body = _.pick(body,['textData','publisher','publishBoards','title']);
 		fileName = _.map(req.files,"filename");
     _.set(body,'attachedFiles',fileName);
     _.set(body,'publisher',req.session._id);
     
+
     var notice = new Notice(body);
     notice.save((err, insertedData) =>{	
 		  if (err){
@@ -52,6 +55,22 @@ router.put('/notice',passLoggedUser,checkAdminStatus,(req,res)=>{
 		});
   });
 
+});
+
+router.get('/notices',passLoggedUser,checkAdminStatus,(req,res)=>{
+  var notice = Notice;
+  notice.find({})
+  .populate('publisher','name')
+  .populate('userViwed','name')
+  .populate('publishBoards','boardName')  
+  .sort({publishDate: -1})
+  .exec(function(err,result){
+    if(result == null ||  result.length == 0){
+      res.status(404).send("no artical in this board");
+    }else{
+      res.send(result)
+    }
+  });
 });
 
 //get single board using id

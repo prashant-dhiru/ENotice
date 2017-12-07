@@ -17,12 +17,13 @@ import { ViewChild } from '@angular/core';
 })
 export class PostNoticeComponent implements OnInit {
 
-  @ViewChild("fileInput") fileInput;
-
   postForm:FormGroup;
   subscription: Subscription;
+  Nsubscription : Subscription;
   allBoards : any[];
-
+  allNotices : any[];
+  filesToUpload : Array<File> = []; 
+  myDate;
   constructor(
     private boardService : BoardService,
     private noticeService : NoticeService
@@ -37,10 +38,11 @@ export class PostNoticeComponent implements OnInit {
 
   ngOnInit() {
     this.getBoard();
+    this.getNotice();
   }
 
   getBoard(){
-    this.subscription = this.boardService.getAllBoards().subscribe((response : Response )=>{
+    this.Nsubscription = this.boardService.getAllBoards().subscribe((response : Response )=>{
       this.allBoards = response.json();
     },(error) =>{
       if(error.status === 500){
@@ -49,10 +51,26 @@ export class PostNoticeComponent implements OnInit {
         console.log("error while fetching board");
       }
     },()=>{
-      this.subscription.unsubscribe();
+      this.Nsubscription.unsubscribe();
     });
   }
 
+  getNotice(){
+    this.subscription = this.noticeService.getAllNoticeBoard()
+    .subscribe((res : Response)=>{
+      console.log(res.json());
+      this.allNotices = res.json();
+    },(error)=>{
+      if(error.status === 500){
+        console.log("internal databse error"); 
+      }else{
+        console.log("error while fetching board");
+      }
+    },()=>{
+      this.subscription.unsubscribe();
+    });
+  }
+  
   putNotice(){
     this.subscription = this.noticeService.putNotice(this.postForm.value)
     .subscribe((response : Response)=>{
@@ -75,15 +93,26 @@ export class PostNoticeComponent implements OnInit {
     }
     
     console.log(this.postForm.value);
-
     this.putNotice();
   }
 
-  addFile():void{
-    let fi = this.fileInput.nativeElement;
-    if ( fi.files && fi.files[0] ){
-      let fileToUpload = fi.files;
-      this.postForm.patchValue({"attachedFiles":fileToUpload}) 
-    }
+  onClear(){
+    this.getNotice();
+    this.myDate = "";
   }
+
+  onSameDate(noticeDate, selectedDate) {
+    let nDate = new Date(noticeDate); 
+    return nDate.getFullYear() === selectedDate.getFullYear() &&
+      nDate.getMonth() === selectedDate.getMonth() &&
+      nDate.getDate() === selectedDate.getDate();
+  }        
+
+  onFilter(dateStr : string){
+    let sDate = new Date(dateStr); 
+    this.allNotices = this.allNotices.filter(
+      notice => this.onSameDate(notice.publishDate,sDate)     
+    );
+  }
+
 }

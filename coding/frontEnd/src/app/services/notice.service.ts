@@ -9,6 +9,10 @@ export class NoticeService {
 
   constructor(private http:Http) { }
 
+  getAllNoticeBoard(){
+    return this.http.get(environment.apiUrl+'notices',{withCredentials:true});
+  }
+
   getNoticeForBoard(boardId){
     return this.http.get(environment.apiUrl+'noticeForBoard/'+boardId,{withCredentials: true});
   }

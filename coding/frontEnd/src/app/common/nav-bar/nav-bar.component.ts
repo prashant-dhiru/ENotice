@@ -27,11 +27,11 @@ export class NavBarComponent implements OnInit{
   }
 
   logOut():void{
+    localStorage.setItem('adminStatus','false');
+    localStorage.setItem('loginStatus','false');
+    localStorage.removeItem('currentUser');
+    this.userService.changeLoginStatus(false,false);
     this.subscription = this.userService.logoutUser().subscribe((response : Response)=>{
-      localStorage.removeItem('currentUser');
-      localStorage.setItem('adminStatus','false');
-      localStorage.setItem('loginStatus','false');
-      this.userService.changeLoginStatus(false,false);
       this.router.navigate(['/login']);
     },(error : any)=>{
       if(error.status === 401){

@@ -46,6 +46,6 @@ var boardSchema = new mongoose.Schema({
 },{collection: 'boards'});
 
 boardSchema.plugin(uniqueValidator, {message: '{VALUE} already in use.'});
-var Board = mongoose.model('boardSchema',boardSchema);
+var Board = mongoose.model('board',boardSchema);
 
 module.exports = {Board};

@@ -41,22 +41,68 @@
                   <option value="" disabled selected>Select Notice Board to host ...</option>
                   <option *ngFor="let board of allBoards" [value]="board._id">{{board.boardName}}</option>
               </select>  
-          </div> 
+              <button class="btn" (click)="onSubmit()"  >submit</button>
+            </div> 
         </form>
       </div>
     </li>
     <li>
-      <div class="collapsible-header">
-        <strong>Attach File</strong>
+      <div class="collapsible-header ">
+        <strong>Manage Notice</strong>
       </div>
       <div class="collapsible-body">
-        <!--section for notice file upload -->
-        <input #fileInput multiple type="file"/>
-        <button class="btn" (click)="addFile()">Add</button>
+        <!--section for notice managment -->
+        <div class="row">
+          <div class="col s12 m5 l3">
+            <a (click)="onClear()" class="btn btn-block">clear</a>
+          </div>
+          <div class="col s12 m7 l9">
+            <input 
+              materialize="pickadate"
+              [materializeParams]="[{format: 'mm/dd/yyyy'}]"
+              type="text" 
+              class="datepicker"
+              placeholder="Date Filter"
+              [ngModel]="myDate" (ngModelChange)="onFilter($event)"
+              />
+          </div>
+        </div>
+        <ul materialize="collapsible" class="collapsible z-depth-0" data-collapsible="accordion">
+          <li *ngFor="let notice of allNotices">
+            <div class="collapsible-header">
+              <div class="col s8">
+                <strong>{{notice.title}}</strong>
+              </div>
+              <div class="col s4 left">
+                <span>{{notice.publishDate | date:mediumDate }} </span>
+              </div>
+            </div>
+            <div class="collapsible-body no-side-border">
+              <!-- body of primary data of notice -->
+              <div class="row">
+                <div class="col s7">
+                  <span class =" left grey-text lighten-2">Publisher : {{notice?.publisher?.name}} </span>
+                </div>
+              </div>
+              <hr>
+              <div class="textData">
+                <span>{{notice?.textData}}</span>
+              </div>
+              <br>
+              <div class="grey-text lighten-2">
+                <span>Notice Published On</span> 
+                <hr>
+                <ul>
+                  <li *ngFor="let board of notice.publishBoards">{{board.boardName}}</li>
+                </ul>
+                <br>
+                <br>
+              </div>
+                <span class="btn delete"> Delete </span>
+            </div> 
+          </li>
+        </ul>
       </div>
-    </li>
-    <li>
-      <div class="collapsible-header"><button class="btn" (click)="onSubmit()"  >submit</button></div>
     </li>
   </ul>
 </div>

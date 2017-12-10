@@ -1,9 +1,9 @@
+.btn{
+	background-color: #4285F4;	
+}
 .outer{
 	background-color: #4285F4;	
 }
 .delete{
 	background-color: #EA4335;
-}
-.no-side-border{
-	border: 0px solid;
 }

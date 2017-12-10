@@ -22,6 +22,8 @@ import { ViewMembershipComponent } from './user/view-membership/view-membership.
 import { DeleteMeComponent } from './user/delete-me/delete-me.component';
 import { PostNoticeComponent } from './admin/post-notice/post-notice.component';
 import { AdminComponent } from './admin/admin.component';
+import { ManageUserComponent } from './admin/manage-user/manage-user.component';
+
 //services
 
 import { UserService } from "./services/user.service";
@@ -46,7 +48,8 @@ declare let require: any;
     ViewMembershipComponent,
     DeleteMeComponent,
     PostNoticeComponent,
-    AdminComponent
+    AdminComponent,
+    ManageUserComponent
   ],
   imports: [ 
     ReactiveFormsModule,

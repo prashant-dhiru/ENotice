@@ -19,6 +19,7 @@ export class PostNoticeComponent implements OnInit {
 
   postForm:FormGroup;
   subscription: Subscription;
+  dSubscription:Subscription;
   Nsubscription : Subscription;
   allBoards : any[];
   allNotices : any[];
@@ -115,4 +116,20 @@ export class PostNoticeComponent implements OnInit {
     );
   }
 
+  onDelete(noticeId){
+    this.dSubscription = this.noticeService.deleteNotice(noticeId).subscribe((res: Response)=>{
+      setTimeout(()=>{
+        this.getNotice();
+      },2000);
+    },(error)=>{
+      if(error.status == 404){
+        console.error("no notice was found to delete");
+      }else{
+        console.error("error while deleting notice");
+      }
+    },()=>{
+      this.dSubscription.unsubscribe();
+    });
+  }
+  
 }

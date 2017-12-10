@@ -87,6 +87,18 @@ router.get('/notice/:noticeId',(req,res)=>{
 	});
 });
 
+router.delete('/notice/:noticeId',passLoggedUser,checkAdminStatus,(req,res)=>{
+  var notice = Notice;
+	notice.findByIdAndRemove(req.params.noticeId)
+	.exec(function(err,result){
+		if(result == null){
+			res.status(404).send("no notice found to delete");
+		}else{
+      res.send("notice deleted");
+    }
+	});
+})
+
 router.get('/noticeForBoard/:boardId',(req,res)=>{
   var notice = Notice;
   notice.find({publishBoards:req.params.boardId})

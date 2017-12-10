@@ -26,10 +26,15 @@ app.use( session ({
 	store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
+
+app.use('/api',require('./routes/userRoutes'));
+app.use('/api',require('./routes/boardRoutes'));
+app.use('/api',require('./routes/noticeRoutes'));
+
 app.use(express.static(path.join(__dirname,'../frontEnd/dist')));
-app.use(require('./routes/userRoutes'));
-app.use(require('./routes/boardRoutes'));
-app.use(require('./routes/noticeRoutes'));
+app.get('*', function(req, res) {
+	res.sendFile(path.join(__dirname,'../frontEnd/dist/index.html'));
+})
 
 app.get('/', (request, response) => {
     response.send('Hello World!');
@@ -37,6 +42,6 @@ app.get('/', (request, response) => {
 
 app.listen(port, (err) => {
   console.log(`Server is up on port ${port}`);
-})
+});
 
 module.exports = {app};

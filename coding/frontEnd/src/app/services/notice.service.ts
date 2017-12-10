@@ -17,6 +17,10 @@ export class NoticeService {
     return this.http.get(environment.apiUrl+'noticeForBoard/'+boardId,{withCredentials: true});
   }
 
+  deleteNotice(noticeId){
+    return this.http.delete(environment.apiUrl+'notice/'+noticeId, {withCredentials:true});
+  }
+
   markView(noticeId){
     return this.http.get(environment.apiUrl + 'notice/viewed/'+noticeId,{withCredentials: true}); 
   }

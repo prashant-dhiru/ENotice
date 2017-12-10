@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
 import { Component } from '@angular/core/src/metadata/directives';
 import { PostNoticeComponent } from './post-notice/post-notice.component';
-
+import { ManageUserComponent } from './manage-user/manage-user.component';
+ 
 export const adminRoutes: Routes = [
   {
     path: '',
@@ -10,6 +11,9 @@ export const adminRoutes: Routes = [
   },{
     path:'postNotice',
     component : PostNoticeComponent
+  },{
+    path:'manageUser',
+    component : ManageUserComponent
   }
 
 ]

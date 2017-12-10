@@ -110,14 +110,15 @@ router.get("/me",passLoggedUser,(req,res)=> {
 			});
 });
 
-router.get("/users",(req,res)=> {
+router.get("/users",passLoggedUser,checkAdminStatus,(req,res)=> {
 	var user = User;
 
 	user.find()
-			.select('_id name email isAdmin')
+			.select('_id name email isAdmin phone registerationDate')
+			.sort({name : 1})
 			.exec(function (err,userData) {
 				if (userData == null)
-					res.status(400).send({message : "no one found"});
+					res.status(404).send("no users found");
 				else{
 					res.send(userData);
 				}
@@ -153,15 +154,19 @@ router.get("/nonAdmins",(req,res)=> {
 });
 
 
-router.post("/user/turnAdmin/:id",passLoggedUser,checkAdminStatus,(req,res)=>{
+router.get("/user/changeAdminStatus/:id",passLoggedUser,checkAdminStatus,(req,res)=>{
 	var user=User;
 	user.findById(req.params.id,(err, userData)=>{
 		if (userData == null)
-			res.status(400).send({message:"User not found!!"});
+			res.status(404).send("User not found!!");
 		else{
-			userData.isAdmin = true;
+			userData.isAdmin = !userData.isAdmin;
 			userData.save();
-			res.send({message: "user changed to admin"});
+			if(userData.isAdmin == true){
+				res.send("admin privillage granted");
+			}else{
+				res.send("admin privillage revoked");
+			}
 		} 
 	});
 });

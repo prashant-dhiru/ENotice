@@ -19,6 +19,10 @@ export class UserService {
   currentlyAdmin = this.isAdmin.asObservable();
 
 
+  getAllUser():Observable<Response>{
+    return this.http.get(environment.apiUrl+'users',{withCredentials:true});
+  }
+
   registerUser(user):Observable<Response>{
     return this.http.put(environment.apiUrl+'user',user, {withCredentials: true});
   }
@@ -38,6 +42,11 @@ export class UserService {
   updateMe(user):Observable<Response>{
     return this.http.patch(environment.apiUrl+'user',user,{withCredentials:true});
   }
+  changeAdminStatus(UserId){
+    return this.http.get(environment.apiUrl+"user/changeAdminStatus/"+UserId,{withCredentials:true});
+  }
+
+
   changeLoginStatus(loginStatus:boolean ,adminStatus:boolean ){
     this.isLogedIn.next(loginStatus);
     this.isAdmin.next(adminStatus);

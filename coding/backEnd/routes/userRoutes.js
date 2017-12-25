@@ -17,6 +17,9 @@ const {passNonLoggedUser} = require("../middleware/authenticationFunction");
 const {authenticateUser} = require("../middleware/authenticationFunction");
 const {passLoggedUser} = require("../middleware/authenticationFunction");
 const {checkAdminStatus}= require('../middleware/authenticationFunction');
+const {revokeAllSubscription} = require("../middleware/userRouteHelperFucntion");
+const {revokeAllMembership} = require("../middleware/userRouteHelperFucntion");
+
 
 router.put('/user',validateUserInfo,hashingPassword, (req,res)=>{
 		body = req.body;
@@ -195,13 +198,13 @@ router.delete("/user/me",passLoggedUser,(req,res)=>{
 	})
 });
 
-router.delete("/user/:id",passLoggedUser,checkAdminStatus,(req,res)=>{
+router.delete("/user/:id",passLoggedUser,checkAdminStatus,revokeAllSubscription,revokeAllMembership,(req,res)=>{
 	var user=User;
 	user.findByIdAndRemove(req.params.id,(err,result)=>{
 		if(result != null){
 			res.send('user ' + req.params.id + ' is deleted');
 		}else{
-			res.send('your account was not found!!');
+			res.status(404).send('your account was not found!!');
 		}
 	})
 });

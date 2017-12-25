@@ -27,4 +27,7 @@ export class BoardService {
 	unSubscribeBoard(BoardId){
 		return this.http.get(environment.apiUrl+"unSubscribe/"+BoardId ,{withCredentials:true});
 	}
+	putBoard(boardData){
+		return this.http.put(environment.apiUrl+"board",boardData,{withCredentials:true});
+	}
 }

@@ -70,7 +70,25 @@ export class ManageUserComponent implements OnInit {
     })
   }
   onFilter(){}
-  deleteUser(){}
+  deleteUser(){
+    this.DUsubscriptin = this.userService.deleteUserByAdmin(this.selectedUser._id).subscribe((res)=>{
+      this.selectedUser = null;
+      this.getAllUsers();
+      console.log(res);
+    },(error)=>{
+      if(error.status === 404){
+        console.log("this user was not found");
+      }else if(error.status === 401){
+        console.log(error.message);
+      }else if(error.status === 500){
+        console.log("internal database error");
+      }else{
+        console.log("error while changing the user admin status");
+      }
+    },()=>{
+      this.DUsubscriptin.unsubscribe();
+    }) 
+  }
   changeAdminStatus(){
      this.CASsubscription = this.userService.changeAdminStatus(this.selectedUser._id).subscribe((res:Response)=>{
       this.selectedUser = null;

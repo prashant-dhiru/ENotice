@@ -45,6 +45,9 @@ export class UserService {
   changeAdminStatus(UserId){
     return this.http.get(environment.apiUrl+"user/changeAdminStatus/"+UserId,{withCredentials:true});
   }
+  deleteUserByAdmin(userId){
+    return this.http.delete(environment.apiUrl+"user/"+userId,{withCredentials:true});
+  }
 
 
   changeLoginStatus(loginStatus:boolean ,adminStatus:boolean ){

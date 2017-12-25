@@ -1,0 +1,102 @@
+<div class="form-card">
+  <ul materialize="collapsible" class="collapsible z-depth-0" data-collapsible="accordion">
+    <li>
+      <div class="collapsible-header active">
+        <strong>Create New Notice Boards</strong>
+      </div>
+      <div class="collapsible-body">
+        <!-- body of primary data of notice -->
+        <form [formGroup]="createBoardForm">
+          <div class="row">
+            <div class="input-field">
+              <input
+                id="boardName"
+                type="text"
+                class="validate"
+                minlength="1"
+                formControlName="boardName"
+                required>
+              <label for="boardName">Name of board</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field">
+              <textarea 
+                id="discription" 
+                class="materialize-textarea"
+                formControlName="discription"                              
+                required>
+              </textarea>
+              <label for="discription">Discription of the board</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field" >
+              <select formControlName="isPrivate" materialize="material_select" >
+                <option value="false" selected>False</option>
+                <option value="true">True</option>
+              </select>
+              <label>Is this board private ?</label>
+            </div>
+          </div>
+          <div class="row">
+            <button class="btn" (click)="onSubmit()">Submit</button>
+          </div>
+        </form>
+      </div>
+    </li>
+    <li>
+      <div class="collapsible-header ">
+        <strong>Manage Notice Boards</strong>
+      </div>
+      <div class="collapsible-body">
+        <!--section for notice managment -->
+        <div class="row">
+          <div class="col s12">
+            <div *ngFor="let board of allBaords" class="card">
+              <div class="card-content">
+                  <span class="card-title bold"><a routerLink = "/board/{{board?._id}}">{{board?.boardName}}</a></span>
+                <hr>
+                <div *ngIf="board?.isPrivate" >
+                  <p class="grey-text"> 
+                    This board is private
+                  </p>
+                </div>
+                <div *ngIf="!board?.isPrivate" >
+                  <p class="grey-text"> 
+                    This board is public
+                  </p>
+                </div>
+                <br>
+                <p>
+                  {{board?.discription}}
+                </p>
+                <br>
+                <div class="row grey-text">
+                  <div class="col s6">
+                    <i class="material-icons tiny">add_alert</i>{{board.subscriberList.length}}
+                  </div>
+                  <div class="col s6">
+                    <span class="left-align">
+                      <i class="material-icons tiny">assignment_ind</i>{{board.memberList.length}}
+                    </span> 
+                  </div>
+                </div>
+                <div class="card-action">
+                  <div class="row">
+                    <div class="col s6">
+                      <a href="#">Update Board</a>
+                    </div>
+                    <div class="col s6">
+                        <a href="#">Manage Users</a>                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

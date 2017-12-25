@@ -13,13 +13,14 @@ router.put('/board',passLoggedUser,checkAdminStatus,(req,res)=>{
 
 	var board = new Board({
 		boardName: body.boardName,
-		isPrivate: body.isPrivate
+		isPrivate: body.isPrivate,
+		discription : body.discription
 	});
 
 	board.save((err, insertedData) =>{
 		if (err && err.name == 'ValidationError')
 			for( feilds in err.errors){
-				res.status(400).send({message : err.errors[feilds].message});
+				res.status(400).send(err.errors[feilds]);
 				break;
 			}
 		else if (err)
@@ -106,7 +107,7 @@ router.get('/boards',(req,res)=>{
 		query = {}
 	
 	board.find(query)
-	.sort({buildDate:1})
+	.sort({boardName:1})
 	.exec(function (err,result){
 		if(err)
 			res.status(500).send("internal database error");
@@ -164,7 +165,7 @@ router.get('/revokeAllMembership/:userId',passLoggedUser,checkAdminStatus,(req,r
 	query = {$pull:{memberList:req.params.userId}};
 	Board.update({memberList : req.params.userId},query,{multi:true},(err,raw)=>{
 		if(err){
-			res.send("Internal database error");
+			res.status(500).send("Internal database error");
 		}else
 			res.send("true");
 	});
@@ -175,7 +176,7 @@ router.get('/revokeAllSubscription/:userId',passLoggedUser,checkAdminStatus,(req
 	query = {$pull:{subscriberList:req.params.userId}};
 	Board.update({subscriberList : req.params.userId},query,{multi:true},(err,raw)=>{
 		if(err){
-			res.send("Internal database error");
+			res.status(500).send("Internal database error");
 		}else
 			res.send("true");
 	});

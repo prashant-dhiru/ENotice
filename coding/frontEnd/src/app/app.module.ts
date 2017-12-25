@@ -23,6 +23,8 @@ import { DeleteMeComponent } from './user/delete-me/delete-me.component';
 import { PostNoticeComponent } from './admin/post-notice/post-notice.component';
 import { AdminComponent } from './admin/admin.component';
 import { ManageUserComponent } from './admin/manage-user/manage-user.component';
+import { ManageBoardsComponent } from './admin/manage-boards/manage-boards.component';
+import { ScrollAtBottomDirective } from './directive/scroll-at-bottom.directive';
 
 //services
 
@@ -49,7 +51,9 @@ declare let require: any;
     DeleteMeComponent,
     PostNoticeComponent,
     AdminComponent,
-    ManageUserComponent
+    ManageUserComponent,
+    ManageBoardsComponent,
+    ScrollAtBottomDirective
   ],
   imports: [ 
     ReactiveFormsModule,

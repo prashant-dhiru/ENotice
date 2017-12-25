@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const {Board} = require('../models/board');
 
 
 var validateUserInfo = (request,response,next)=>{
@@ -38,4 +39,23 @@ var hashingPassword = (req, res, next)=>{
   });
 };
 
-module.exports = {hashingPassword,validateUserInfo,validateUpdateInfo};
+var revokeAllSubscription = (req,res,next)=>{
+	query = {$pull:{subscriberList:req.params.id}};
+	Board.update({subscriberList : req.params.id},query,{multi:true},(err,raw)=>{
+		if(err){
+			res.status(500).send("Internal database error");
+		}else
+			next();
+	});
+}
+
+var revokeAllMembership = (req,res,next)=>{
+	query = {$pull:{memberList:req.params.id}};
+	Board.update({memberList : req.params.id},query,{multi:true},(err,raw)=>{
+		if(err){
+			res.status(500).send("Internal database error");
+		}else
+		next();
+	});	
+}
+module.exports = {hashingPassword,validateUserInfo,validateUpdateInfo, revokeAllSubscription,revokeAllMembership};
